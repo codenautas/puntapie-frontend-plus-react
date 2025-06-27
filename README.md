@@ -47,6 +47,7 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o supe
 
 Este proyecto está organizado de la siguiente manera:
 
+```
 mi-frontend-plus-app/
 ├── public/                # Archivos estáticos
 ├── src/
@@ -63,6 +64,7 @@ mi-frontend-plus-app/
 ├── vite.config.ts         # Configuración de Vite
 └── tsconfig.json          # Configuración de TypeScript
 └── README.md              # Este archivo
+```
 
 * **[React](https://react.dev/)**: Biblioteca de JavaScript para construir interfaces de usuario.
 * **[Vite](https://vitejs.dev/)**: Herramienta de construcción rápida para proyectos web modernos.
