@@ -1,69 +1,93 @@
-# React + TypeScript + Vite
+# puntapie-frontend-plus-react
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Currently, two official plugins are available:
+Una aplicación frontend de ejemplo construida con React, Vite y MUI, que demuestra la integración y extensibilidad de la librería `frontend-plus-react`. Esta aplicación sirve como punto de partida y referencia para futuros proyectos que necesiten una base sólida con funcionalidades de tabla, formularios de procedimiento y componentes personalizados.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Inicio Rápido
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Sigue estos pasos para poner la aplicación en marcha en tu entorno local.
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerrequisitos
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o superior) y [npm](https://www.npmjs.com/) en tu sistema.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Instalación
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1.  **Clona el repositorio (y nombra tu aplicación final):**
+    ```bash
+    git clone [https://github.com/codenautas/puntapie-frontend-plus-react.git](https://github.com/codenautas/puntapie-frontend-plus-react.git) nombre-de-tu-app-final
+    cd nombre-de-tu-app-final
+    ```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2.  **Instala las dependencias:**
+    ```bash
+    npm install
+    ```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### Ejecución
+
+1.  **Inicia el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+    La aplicación se iniciará en `http://localhost:5173` (o el puerto que te indique Vite).
+
+2.  **(Opcional) Construye para producción:**
+    ```bash
+    npm run build
+    ```
+    Esto generará los archivos de producción en la carpeta `dist/`.
+
+---
+
+## 📋 Estructura del Proyecto
+
+Este proyecto está organizado de la siguiente manera:
+
+mi-frontend-plus-app/
+├── public/                # Archivos estáticos
+├── src/
+│   ├── assets/            # Imágenes, iconos, etc.
+│   ├── components/        # Componentes reutilizables de la aplicación final
+│   │   └── client-sides/  # Componentes client-side personalizados (e.g., renderers de celda)
+│   ├── pages/             # Páginas específicas de la aplicación final
+│   │   └── results-ok/    # Componentes de resultado de procedimiento personalizados
+│   ├── App.tsx            # Componente principal donde se configura `frontend-plus-react`
+│   ├── main.tsx           # Punto de entrada de la aplicación
+│   └── index.css          # Estilos globales
+├── .env                   # Variables de entorno (no incluir en Git)
+├── package.json           # Dependencias y scripts
+├── vite.config.ts         # Configuración de Vite
+└── tsconfig.json          # Configuración de TypeScript
+└── README.md              # Este archivo
+
+* **[React](https://react.dev/)**: Biblioteca de JavaScript para construir interfaces de usuario.
+* **[Vite](https://vitejs.dev/)**: Herramienta de construcción rápida para proyectos web modernos.
+* **[Material-UI (MUI)](https://mui.com/)**: Biblioteca de componentes React para un diseño atractivo y responsivo.
+* **[TypeScript](https://www.typescriptlang.org/)**: JavaScript con tipado estático.
+* **[React Router DOM](https://reactrouter.com/en/main)**: Enrutamiento declarativo para React.
+* **[Redux Toolkit](https://redux-toolkit.js.org/) & [React Redux](https://react-redux.js.org/)**: Gestión de estado predecible.
+* **[Redux Persist](https://github.com/rt2zz/redux-persist)**: Persistencia del estado de Redux.
+* **[Notistack](https://iamhosseindhv.com/notistack)**: Notificaciones fáciles de usar.
+* **[React Data Grid](https://reactdatagrid.io/)**: Componente de tabla eficiente y flexible.
+* **`frontend-plus-react`**: Tu propia librería, integrada como dependencia.
+
+Esta aplicación demuestra cómo integrar y extender la librería `frontend-plus-react`. Las funcionalidades clave se pasan al componente `AppFromFrontendPlusReact` a través de props en el archivo **`src/App.tsx`**:
+
+* `myRoutes`: Rutas personalizadas que se añaden al enrutamiento principal de la librería.
+* `myWScreens`: Componentes de pantalla personalizados (WScreens) que se mapean a URLs específicas (`/wScreens/:screenName`).
+* `myClientSides`: Componentes personalizados para renderizar celdas en las tablas de `react-data-grid`.
+* `myResultsOk`: Componentes para mostrar resultados de procedimientos específicos (e.g., para operaciones exitosas).
+
+Consulta el archivo `src/App.tsx` para ver un ejemplo detallado de cómo se configuran e inyectan estos componentes.
+
+Dado que esta es una aplicación de ejemplo, las contribuciones directas en forma de Pull Requests no son el objetivo principal. 
+
+Sin embargo, si encuentras errores o tienes sugerencias para mejorarla como plantilla, no dudes en abrir un *Issue* en este repositorio.
+
+Este proyecto está licenciado bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+
+Para cualquier pregunta o comentario, puedes contactar a Codenautas <codenautas@googlegroups.com>.
