@@ -75,7 +75,7 @@ mi-frontend-plus-app/
 * **[Redux Persist](https://github.com/rt2zz/redux-persist)**: Persistencia del estado de Redux.
 * **[Notistack](https://iamhosseindhv.com/notistack)**: Notificaciones fáciles de usar.
 * **[React Data Grid](https://reactdatagrid.io/)**: Componente de tabla eficiente y flexible.
-* **`frontend-plus-react`**: Tu propia librería, integrada como dependencia.
+* **`frontend-plus-react`**: Modulo desarrollado por codenautas (https://github.com/codenautas/puntapie-frontend-plus-react), integrado como dependencia (https://www.npmjs.com/package/frontend-plus-react).
 
 Esta aplicación demuestra cómo integrar y extender la librería `frontend-plus-react`. Las funcionalidades clave se pasan al componente `AppFromFrontendPlusReact` a través de props en el archivo **`src/App.tsx`**:
 
