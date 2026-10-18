@@ -1,4 +1,4 @@
-import { defineConfig, type Plugin } from 'vite'
+import { defineConfig, loadEnv, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import { existsSync, readFileSync } from 'node:fs'
 import { dirname, resolve } from 'node:path'
@@ -33,19 +33,29 @@ function sourcemapsDeLibrerias(librerias: string[]): Plugin {
 }
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [react(), sourcemapsDeLibrerias(LIBRERIAS_CON_FUENTES)],
-  server: {
-    port: 8080
-  },
-  resolve: {
-    // frontend-plus-react está enlazado (npm link) y tiene su propio node_modules:
-    // sin dedupe podría haber dos copias de React y los hooks fallan ("Invalid hook call").
-    // Solo van los paquetes que esta app tiene instalados; MUI se toma del node_modules de la librería.
-    dedupe: ['react', 'react-dom', 'react-router-dom'],
-  },
-  build: {
-    // los .map se generan junto al bundle: en F12 se ven los fuentes de la app y de frontend-plus-react
-    sourcemap: true,
-  },
+export default defineConfig(({ mode }) => {
+  const env = loadEnv(mode, process.cwd(), '')
+  // Si VITE_BACKEND_URL es una ruta (por ejemplo /dmencu) en lugar de una URL completa, el servidor de desarrollo
+  // la reenvía a PROXY_BACKEND (por ejemplo http://localhost:3050): el navegador habla con un solo origen y
+  // no hace falta configurar CORS (server.allowedHosts) en el backend ni compartir cookies entre puertos.
+  const rutaBackend = env.VITE_BACKEND_URL?.startsWith('/') ? env.VITE_BACKEND_URL : null
+  return {
+    plugins: [react(), sourcemapsDeLibrerias(LIBRERIAS_CON_FUENTES)],
+    server: {
+      port: 8080,
+      proxy: rutaBackend && env.PROXY_BACKEND
+        ? { [rutaBackend]: { target: env.PROXY_BACKEND, changeOrigin: true } }
+        : undefined,
+    },
+    resolve: {
+      // frontend-plus-react está enlazado (npm link) y tiene su propio node_modules:
+      // sin dedupe podría haber dos copias de React y los hooks fallan ("Invalid hook call").
+      // Solo van los paquetes que esta app tiene instalados; MUI se toma del node_modules de la librería.
+      dedupe: ['react', 'react-dom', 'react-router-dom'],
+    },
+    build: {
+      // los .map se generan junto al bundle: en F12 se ven los fuentes de la app y de frontend-plus-react
+      sourcemap: true,
+    },
+  }
 })
