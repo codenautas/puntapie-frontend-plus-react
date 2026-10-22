@@ -39,12 +39,23 @@ export default defineConfig(({ mode }) => {
   // la reenvía a PROXY_BACKEND (por ejemplo http://localhost:3050): el navegador habla con un solo origen y
   // no hace falta configurar CORS (server.allowedHosts) en el backend ni compartir cookies entre puertos.
   const rutaBackend = env.VITE_BACKEND_URL?.startsWith('/') ? env.VITE_BACKEND_URL : null
+  // Para probar la aplicación como la sirve el backend (por ejemplo VITE_BASE=/ggs2026/react/ con VITE_BACKEND_URL=/ggs2026):
+  // mismo origen que la API, y el cliente de backend-plus (puenteBP) comparte la sesión.
+  const base = env.VITE_BASE || '/'
   return {
+    base,
     plugins: [react(), sourcemapsDeLibrerias(LIBRERIAS_CON_FUENTES)],
     server: {
       port: 8080,
       proxy: rutaBackend && env.PROXY_BACKEND
-        ? { [rutaBackend]: { target: env.PROXY_BACKEND, changeOrigin: true } }
+        ? {
+            [rutaBackend]: {
+              target: env.PROXY_BACKEND,
+              changeOrigin: true,
+              // la propia aplicación (VITE_BASE, dentro de la ruta del backend) no se reenvía: la sirve Vite
+              bypass: (req) => base !== '/' && req.url?.startsWith(base) ? req.url : undefined,
+            },
+          }
         : undefined,
     },
     resolve: {
