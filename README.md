@@ -29,13 +29,15 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o supe
 
 ### Ejecución
 
-1.  **Inicia el servidor de desarrollo:**
+1.  **Configura el backend:** copia `.env.example` a `.env` y ajusta `VITE_BASE`, `VITE_BACKEND_URL` y `PROXY_BACKEND` a tu backend (la base-url, que es la misma en las dos primeras, y el puerto donde corre). La aplicación usa el cliente de `backend-plus` (`puenteBP`), que solo funciona en el mismo origen que el backend: por eso Vite la sirve bajo `<base-url>/react/` y reenvía el resto de `<base-url>` al backend.
+
+2.  **Inicia el servidor de desarrollo:**
     ```bash
     npm run dev
     ```
-    La aplicación se iniciará en `http://localhost:5173` (o el puerto que te indique Vite).
+    La aplicación se iniciará en `http://localhost:8080/<base-url>/react/` (por ejemplo `http://localhost:8080/ggs2026/react/`).
 
-2.  **(Opcional) Construye para producción:**
+3.  **(Opcional) Construye para producción:**
     ```bash
     npm run build
     ```
