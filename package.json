@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsc -b && vite",
+    "dev:ggs": "tsc -b && vite --mode ggs",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
