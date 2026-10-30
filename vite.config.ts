@@ -32,6 +32,35 @@ function sourcemapsDeLibrerias(librerias: string[]): Plugin {
   }
 }
 
+/**
+ * Cuando alguien navega a las páginas del propio backend (login, logout, menú) en el servidor de desarrollo, se lo lleva a
+ * las de la aplicación (su login, su salida, su inicio) en lugar de mostrar las de backend-plus: así se entra siempre por
+ * localhost:8080. Solo las navegaciones de página (`Sec-Fetch-Dest: document`): el cliente de backend-plus pide
+ * `<backend>/menu` con fetch para leer sus scripts, y el login de la aplicación es un POST con fetch; ninguno se toca.
+ * Para ver backend-plus nativo se entra directo al puerto del backend.
+ */
+function paginasDelBackendALaApp(rutaBackend: string, base: string): Plugin {
+  const destinos: Record<string, string> = {
+    '': base, '/': base, '/menu': base,
+    '/login': `${base}login`,
+    '/logout': `${base}logout`,
+  }
+  return {
+    name: 'paginas-del-backend-a-la-app',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use((req, res, next) => {
+        const url = new URL(req.url ?? '/', 'http://localhost')
+        if (req.method !== 'GET' || req.headers['sec-fetch-dest'] !== 'document' || !url.pathname.startsWith(rutaBackend)) return next()
+        const destino = destinos[url.pathname.slice(rutaBackend.length)]
+        if (destino === undefined) return next()
+        res.writeHead(302, { Location: destino })
+        res.end()
+      })
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -44,7 +73,11 @@ export default defineConfig(({ mode }) => {
   const base = env.VITE_BASE || '/'
   return {
     base,
-    plugins: [react(), sourcemapsDeLibrerias(LIBRERIAS_CON_FUENTES)],
+    plugins: [
+      react(),
+      sourcemapsDeLibrerias(LIBRERIAS_CON_FUENTES),
+      ...(rutaBackend && env.PROXY_BACKEND ? [paginasDelBackendALaApp(rutaBackend, base)] : []),
+    ],
     server: {
       port: 8080,
       proxy: rutaBackend && env.PROXY_BACKEND

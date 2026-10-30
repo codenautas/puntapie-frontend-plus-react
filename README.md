@@ -29,7 +29,7 @@ Asegúrate de tener instalado [Node.js](https://nodejs.org/) (versión 18 o supe
 
 ### Ejecución
 
-1.  **Configura el backend:** copia `.env.example` a `.env` y ajusta `VITE_BASE`, `VITE_BACKEND_URL` y `PROXY_BACKEND` a tu backend (la base-url, que es la misma en las dos primeras, y el puerto donde corre). La aplicación usa el cliente de `backend-plus` (`puenteBP`), que solo funciona en el mismo origen que el backend: por eso Vite la sirve bajo `<base-url>/react/` y reenvía el resto de `<base-url>` al backend.
+1.  **Configura el backend:** copia `.env.example` a `.env` y ajusta `VITE_BASE`, `VITE_BACKEND_URL` y `PROXY_BACKEND` a tu backend (la base-url, que es la misma en las dos primeras, y el puerto donde corre). La aplicación usa el cliente de `backend-plus` (`puenteBP`), que solo funciona en el mismo origen que el backend: por eso Vite la sirve bajo `<base-url>/react/` y reenvía el resto de `<base-url>` al backend. Las páginas del propio backend (`<base-url>/login`, `/logout`, `/menu`) se llevan a las de la aplicación cuando se navega a ellas: se entra siempre por `localhost:8080` y nunca aparece el login de backend-plus. Para ver backend-plus nativo se entra directo al puerto del backend.
 
 2.  **Inicia el servidor de desarrollo:**
     ```bash
