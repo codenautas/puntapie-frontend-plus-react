@@ -20,6 +20,7 @@ const SimplePublicLayout = () => (
 function App() {
   return (
     <AppFromFrontendPlusReact
+      puenteBP
       myRoutes={
         <>
           <Route path="/about" element={<AboutPage />} />
