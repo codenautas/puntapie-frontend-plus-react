@@ -17,7 +17,7 @@
     }
   ],
   "dependencies": {
-    "frontend-plus-react": "^0.6.0",
+    "frontend-plus-react": "^0.7.0",
     "react-router-dom": "^7.6.3"
   },
   "devDependencies": {
