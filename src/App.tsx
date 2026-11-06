@@ -21,6 +21,7 @@ function App() {
   return (
     <AppFromFrontendPlusReact
       puenteBP
+      recuperarClave
       myRoutes={
         <>
           <Route path="/about" element={<AboutPage />} />
